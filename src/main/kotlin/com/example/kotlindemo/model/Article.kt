@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank
 @Entity
 data class Article (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Long,
 
     @get: NotBlank
     val title: String = "",

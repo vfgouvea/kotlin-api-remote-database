@@ -1,35 +1,37 @@
 package com.example.kotlindemo.controller
 
 import com.example.kotlindemo.model.Article
-import com.example.kotlindemo.repository.ArticleRepository
+import com.example.kotlindemo.repository.ArticleDao
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
-class ArticleController(private val articleRepository: ArticleRepository) {
+class ArticleController(@Autowired
+                        private val dao: ArticleDao? = null) {
 
     @GetMapping("/articles")
-    fun getAllArticles(): List<Article> =
-            articleRepository.findAll()
+    fun getAllArticles(): List<Article>? = dao!!.loadAll()
 
 
-    @PostMapping("/articles")
-    fun createNewArticle(@Valid @RequestBody article: Article): Article =
+   // @PostMapping("/articles")
+   /* fun createNewArticle(@Valid @RequestBody article: Article): Article =
             articleRepository.save(article)
+*/
 
-
-    @GetMapping("/articles/{id}")
+ /*   @GetMapping("/articles/{id}")
     fun getArticleById(@PathVariable(value = "id") articleId: Long): ResponseEntity<Article> {
         return articleRepository.findById(articleId).map { article ->
             ResponseEntity.ok(article)
         }.orElse(ResponseEntity.notFound().build())
     }
-
-    @PutMapping("/articles/{id}")
+*/
+   /* @PutMapping("/articles/{id}")
     fun updateArticleById(@PathVariable(value = "id") articleId: Long,
                           @Valid @RequestBody newArticle: Article): ResponseEntity<Article> {
 
@@ -40,9 +42,9 @@ class ArticleController(private val articleRepository: ArticleRepository) {
             ResponseEntity.ok().body(articleRepository.save(updatedArticle))
         }.orElse(ResponseEntity.notFound().build())
 
-    }
+    }*/
 
-    @DeleteMapping("/articles/{id}")
+  /*  @DeleteMapping("/articles/{id}")
     fun deleteArticleById(@PathVariable(value = "id") articleId: Long): ResponseEntity<Void> {
 
         return articleRepository.findById(articleId).map { article  ->
@@ -50,5 +52,5 @@ class ArticleController(private val articleRepository: ArticleRepository) {
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
 
-    }
+    }*/
 }
